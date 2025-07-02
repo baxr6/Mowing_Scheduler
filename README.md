@@ -1,96 +1,112 @@
-# Mowing Scheduler
+# 🏞️ Mowing Scheduler
 
-**Mowing Scheduler** is a desktop application built with Python and Tkinter to help manage and schedule weekly lawn mowing services. It stores client information, displays scheduled jobs in a weekly view, and allows for quick updates like marking jobs as completed.
+A Python-based scheduling tool to optimize the assignment of mowing tasks across teams, generate Excel schedules, and visualize work allocation with Gantt charts.
 
-This is ideal for small landscaping businesses or individuals who want a lightweight scheduling tool without the complexity of online calendars or CRMs.
+---
 
-## Features
+## 🚀 Features
 
-- 🗓 Weekly schedule view with dynamic calendar navigation
-- 👤 Add, edit, and store client details
-- ✅ Mark appointments as completed
-- 💾 Persistent storage using CSV for client and schedule data
-- 🔍 View and filter scheduled jobs for a selected week
-- 📦 Built with only the Python standard library (no dependencies!)
+- 📊 **Intelligent Scheduling** based on area, priority, and team availability
+- 📅 **Calendar and Gantt Chart** generation
+- 📁 **CSV Input + Configurable JSON settings**
+- 📤 **Exports Excel spreadsheet** with:
+  - Job assignments
+  - Calendar view
+  - Team performance metrics
+- ⚙️ **Supports job dependencies and team mappings**
+- 🧪 Optional unit test runner
 
-## Getting Started
+---
 
-### Prerequisites
+## 📂 Project Structure
 
-- Python 3.7 or higher
+scheduling_class/
+├── cli.py # Command-line entry point
+├── scheduler.py # Core logic for job scheduling
+├── gantt.py # Gantt chart visualization
+├── excel_export.py # Excel export functionality
+├── config_loader.py # Loads JSON configuration
+├── park_loader.py # Loads parks from CSV
+├── utils.py # Helper functions (e.g., working days)
+├── config.json # Sample configuration
+├── sample_parks_300.csv # Sample input park data
 
-### Installation
 
-1. **Clone the repository:**
+---
+
+## 🛠️ Requirements
+
+- Python 3.8+
+- pandas
+- openpyxl
+- matplotlib
+
+Install dependencies:
 
 ```bash
-git clone https://github.com/baxr6/Mowing_Scheduler.git
-cd Mowing_Scheduler
+pip install -r requirements.txt
 
-    Run the app:
+📈 How to Use
 
-python mowing_scheduler.py
+python scheduling_class/cli.py --csv sample_parks_300.csv --config config.json --output schedule.xlsx
 
-    ✅ No need for external libraries — everything runs from the standard Python installation!
+Optional Arguments:
 
-Usage
+    --weeks 1 2 3 : Filter output to specific weeks
 
-Once you run the application:
+    --test : Run unit tests
 
-    Use the "Add Client" button to input a client's name, address, day of the week, and completion status.
+📋 Configuration (config.json)
 
-    The schedule is automatically updated and saved in schedule.csv.
+Example fields:
 
-    Use navigation buttons to change weeks and review upcoming or past mowing schedules.
+{
+  "TEAM_NAME_MAPPING": {
+    "North": ["TeamA", "TeamB"],
+    "South": ["TeamC"]
+  },
+  "HISTORICAL_HOURS": {
+    "TeamA": 20,
+    "TeamB": 15
+  },
+  "DEFAULT_MOWING_RATE_SQM_PER_HOUR": 1000,
+  "DEFAULT_BUFFER": 0.15,
+  "DEPENDENCIES": {
+    "Park 2": ["Park 1"]
+  }
+}
 
-    Click "Complete" to mark a client's mowing job for the week as finished.
+📄 Input Data (sample_parks_300.csv)
 
-Project Structure
+CSV should include at least:
 
-Mowing_Scheduler/
-├── client.py               # Client model definition
-├── mowing_scheduler.py     # Main GUI application using Tkinter
-├── schedule.csv            # Stores the list of clients and mowing schedules
-└── README.md               # Project documentation
+name,suburb,area_sqm,priority
+Central Park,Northside,2500,2
+Riverside,Sunnyside,3000,1
 
-File Descriptions
+📤 Output
 
-    mowing_scheduler.py
-    Main file that runs the GUI application. Handles calendar logic, user input, and CSV reading/writing.
+The script generates:
 
-    client.py
-    Defines a Client class with attributes like name, address, scheduled day, and completion status.
+    schedule.xlsx – Contains job list, calendar view, metrics
 
-    schedule.csv
-    CSV file used to persist client and mowing schedule data. Automatically updated when you add or modify clients.
+    schedule.xlsx_gantt.png – Gantt chart visualizing team schedules
 
-Roadmap / Improvements
+🧪 Testing
 
-Add editing functionality for existing clients
+To run the unit tests (if defined):
 
-Support for one-time or custom-date jobs
+python scheduling_class/cli.py --test
 
-Move to SQLite or JSON for better structure and flexibility
+📌 Notes
 
-    Export weekly reports or invoices
+    Jobs with unmet dependencies will be skipped until resolved.
 
-Contributing
+    Parks with area ≤ 0 are ignored.
 
-Contributions are welcome! Here's how to get started:
+    Teams are assigned using a heap-based load balancer for fairness.
 
-    Fork the repository
+📬 Contact
 
-    Create a new branch: git checkout -b feature/your-feature
-
-    Commit your changes: git commit -m "Add feature"
-
-    Push to the branch: git push origin feature/your-feature
-
-    Open a pull request
-
-License
-
-This project is licensed under the MIT License.
-Author
-
-Created by @baxr6
+Maintained by deano.welch@gmail.com. Contributions welcome!
+📄 License
