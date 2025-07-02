@@ -1,0 +1,35 @@
+{
+  "DEFAULT_MOWING_RATE_SQM_PER_HOUR": 1500,
+  "DEFAULT_WORKDAY_HOURS": 8,
+  "DEFAULT_WORKDAYS_PER_WEEK": 6,
+  "DEFAULT_BUFFER": 0.05,
+  "ALLOW_OVERTIME": true,
+  "MAX_OVERTIME_HOURS_PER_DAY": 2,
+  "START_DATE": "2025-07-01",
+  "PUBLIC_HOLIDAYS": ["2025-07-08", "2025-07-26"],
+  "BAD_WEATHER_DAYS": ["2025-07-08", "2025-07-26"],
+  "TEAM_NAME_MAPPING": {
+    "North": ["Team A", "Team B", "Team C"],
+    "South": ["Team C", "Team D", "Team E"],
+    "Central": ["Team F", "Team G", "Team H"]
+  },
+  "SUBURB_TO_COMBINED_TEAM": {
+    "Northville": ["North"],
+    "Southtown": ["South"],
+    "Centerville": ["Central"],
+    "Rivertown": ["North", "Central"],
+    "Lakeside": ["South", "Central"]
+  },
+  "WEEK_RANGE_TO_INCLUDE": [1, 2],
+  "WEEKLY_HOUR_LIMITS": {
+  "Team A": 38,
+  "Team B": 38,
+  "Team C": 38,
+  "Team D": 38,
+  "Team E": 38,
+  "Team F": 38,
+  "Team G": 38,
+  "Team H": 38
+}
+
+}
