@@ -1,10 +1,7 @@
-
 import heapq
 import pandas as pd
 from utils import get_nth_working_day
 
-OVERTIME_YES = "Yes"
-OVERTIME_NO = "No"
 
 class MowingScheduler:
     def __init__(self, config, parks):
@@ -73,19 +70,28 @@ class MowingScheduler:
                     current_week_hours = status["weekly_hours"].get(week, 0)
                     available_today = self.config["DEFAULT_WORKDAY_HOURS"] - status["hours_assigned_today"]
 
+                    overtime_flag = False
                     if available_today <= 0 and self.config["ALLOW_OVERTIME"]:
                         available_today = self.config["MAX_OVERTIME_HOURS_PER_DAY"]
                         overtime_flag = True
                     elif available_today <= 0:
                         continue
-                    else:
-                        overtime_flag = False
 
-                    available_total = min(available_today, max_week_hours - current_week_hours)
+                    # Cap total daily hours including overtime
+                    max_daily_hours = self.config["DEFAULT_WORKDAY_HOURS"]
+                    if self.config["ALLOW_OVERTIME"]:
+                        max_daily_hours += self.config["MAX_OVERTIME_HOURS_PER_DAY"]
+
+                    remaining_daily_capacity = max_daily_hours - status["hours_assigned_today"]
+                    if remaining_daily_capacity <= 0:
+                        continue
+
+                    available_total = min(available_today, max_week_hours - current_week_hours, remaining_daily_capacity)
                     if available_total <= 0:
                         continue
 
                     time_to_assign = min(available_total, time_remaining)
+
                     area_chunk = time_to_assign * self.config["DEFAULT_MOWING_RATE_SQM_PER_HOUR"] / (1 + self.config["DEFAULT_BUFFER"])
 
                     self.jobs[t].append({
@@ -97,7 +103,7 @@ class MowingScheduler:
                         "estimated_hours": round(time_to_assign, 2),
                         "day": status["current_day"],
                         "date": work_date.isoformat(),
-                        "overtime": OVERTIME_YES if overtime_flag else OVERTIME_NO,
+                        "overtime": overtime_flag and self.config["ALLOW_OVERTIME"],
                         "priority": park.get("priority", 0)
                     })
 
@@ -173,7 +179,7 @@ class MowingScheduler:
         return pd.DataFrame(rows)
 
     def generate_metrics(self, df):
-        overtime = df["Overtime"] == OVERTIME_YES
+        overtime = df["Overtime"].astype(bool)
         summary = df.groupby('Team').agg(
             Total_Parks=('Park', 'nunique'),
             Total_Area_Sqm=('Area (sqm)', 'sum'),
