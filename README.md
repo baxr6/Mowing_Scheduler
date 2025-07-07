@@ -70,28 +70,53 @@ Optional Arguments:
 Example fields:
 
 {
+  "DEFAULT_MOWING_RATE_SQM_PER_HOUR": 1200,
+  "DEFAULT_WORKDAY_HOURS": 6,
+  "DEFAULT_WORKDAYS_PER_WEEK": 6,
+  "DEFAULT_BUFFER": 0.05,
+  "ALLOW_OVERTIME": false,
+  "MAX_OVERTIME_HOURS_PER_DAY": 2,
+  "START_DATE": "2025-07-07",
+  "PUBLIC_HOLIDAYS": ["2025-07-08", "2025-07-26"],
+  "BAD_WEATHER_DAYS": ["2025-07-08", "2025-07-26"],
   "TEAM_NAME_MAPPING": {
-    "North": ["TeamA", "TeamB"],
-    "South": ["TeamC"]
+    "North": ["Team A", "Team B", "Team C", "Team D"],
+    "South": ["Team E", "Team F", "Team G", "Team H"],
+    "Central": ["Team I", "Team J", "Team K", "Team L"]
   },
-  "HISTORICAL_HOURS": {
-    "TeamA": 20,
-    "TeamB": 15
+  "SUBURB_TO_COMBINED_TEAM": {
+    "Dinmore": ["North"],
+    "Springfield": ["South"],
+    "Riverview": ["Central"],
+    "FlindersView": ["North", "Central"],
+    "Raceview": ["South", "Central"]
   },
-  "DEFAULT_MOWING_RATE_SQM_PER_HOUR": 1000,
-  "DEFAULT_BUFFER": 0.15,
-  "DEPENDENCIES": {
-    "Park 2": ["Park 1"]
-  }
+  "WEEK_RANGE_TO_INCLUDE": [1],
+  "WEEKLY_HOUR_LIMITS": {
+  "Team A": 38,
+  "Team B": 38,
+  "Team C": 38,
+  "Team D": 38,
+  "Team E": 38,
+  "Team F": 38,
+  "Team G": 38,
+  "Team H": 38,
+  "Team I": 38,
+  "Team J": 38,
+  "Team K": 38,
+  "Team L": 38
 }
+
+}
+
 
 📄 Input Data (sample_parks_300.csv)
 
 CSV should include at least:
 
-name,suburb,area_sqm,priority
-Central Park,Northside,2500,2
-Riverside,Sunnyside,3000,1
+name,suburb,area_sqm
+Central Park,Northside,2500
+Riverside,Sunnyside,3000
 
 📤 Output
 
