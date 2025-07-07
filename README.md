@@ -21,9 +21,7 @@ A Python-based scheduling tool to optimize the assignment of mowing tasks across
 ## 📂 Project Structure
 
 scheduling_class/
-
 ├── cli.py # Command-line entry point
-
 ├── scheduler.py # Core logic for job scheduling
 ├── gantt.py # Gantt chart visualization
 ├── excel_export.py # Excel export functionality
