@@ -21,14 +21,23 @@ A Python-based scheduling tool to optimize the assignment of mowing tasks across
 ## 📂 Project Structure
 
 scheduling_class/
+
 ├── cli.py # Command-line entry point
+
 ├── scheduler.py # Core logic for job scheduling
+
 ├── gantt.py # Gantt chart visualization
+
 ├── excel_export.py # Excel export functionality
+
 ├── config_loader.py # Loads JSON configuration
+
 ├── park_loader.py # Loads parks from CSV
+
 ├── utils.py # Helper functions (e.g., working days)
+
 ├── config.json # Sample configuration
+
 ├── sample_parks_300.csv # Sample input park data
 
 
