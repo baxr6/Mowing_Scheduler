@@ -1,26 +1,26 @@
 {
-  "DEFAULT_MOWING_RATE_SQM_PER_HOUR": 1500,
-  "DEFAULT_WORKDAY_HOURS": 8,
+  "DEFAULT_MOWING_RATE_SQM_PER_HOUR": 1200,
+  "DEFAULT_WORKDAY_HOURS": 6,
   "DEFAULT_WORKDAYS_PER_WEEK": 6,
   "DEFAULT_BUFFER": 0.05,
-  "ALLOW_OVERTIME": true,
+  "ALLOW_OVERTIME": false,
   "MAX_OVERTIME_HOURS_PER_DAY": 2,
-  "START_DATE": "2025-07-01",
+  "START_DATE": "2025-07-07",
   "PUBLIC_HOLIDAYS": ["2025-07-08", "2025-07-26"],
   "BAD_WEATHER_DAYS": ["2025-07-08", "2025-07-26"],
   "TEAM_NAME_MAPPING": {
-    "North": ["Team A", "Team B", "Team C"],
-    "South": ["Team C", "Team D", "Team E"],
-    "Central": ["Team F", "Team G", "Team H"]
+    "North": ["Team A", "Team B", "Team C", "Team D"],
+    "South": ["Team E", "Team F", "Team G", "Team H"],
+    "Central": ["Team I", "Team J", "Team K", "Team L"]
   },
   "SUBURB_TO_COMBINED_TEAM": {
-    "Northville": ["North"],
-    "Southtown": ["South"],
-    "Centerville": ["Central"],
-    "Rivertown": ["North", "Central"],
-    "Lakeside": ["South", "Central"]
+    "Dinmore": ["North"],
+    "Springfield": ["South"],
+    "Riverview": ["Central"],
+    "FlindersView": ["North", "Central"],
+    "Raceview": ["South", "Central"]
   },
-  "WEEK_RANGE_TO_INCLUDE": [1, 2],
+  "WEEK_RANGE_TO_INCLUDE": [1],
   "WEEKLY_HOUR_LIMITS": {
   "Team A": 38,
   "Team B": 38,
@@ -29,7 +29,11 @@
   "Team E": 38,
   "Team F": 38,
   "Team G": 38,
-  "Team H": 38
+  "Team H": 38,
+  "Team I": 38,
+  "Team J": 38,
+  "Team K": 38,
+  "Team L": 38
 }
 
 }
