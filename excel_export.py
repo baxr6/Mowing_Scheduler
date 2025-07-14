@@ -26,3 +26,5 @@ def export_to_excel(df_jobs, calendar_df, metrics_df, filename="mowing_team_sche
     wb = load_workbook(filename)
     apply_overtime_highlighting(wb["Detailed Assignments"])
     wb.save(filename)
+
+
