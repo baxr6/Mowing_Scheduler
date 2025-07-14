@@ -31,11 +31,10 @@ def export_gantt_chart(df, filename="mowing_team_schedule.xlsx"):
     team_color_map = {team: plt.cm.tab20(i % 20) for i, team in enumerate(teams)}
 
     spacing = 0.15  # vertical space per job label
-    min_row_height = 1.0  # minimum row height (inches)
+    min_row_height = 1.5  # increased min row height for better spacing
     padding = 0.5  # padding in inches per row
 
     width_per_day = 3  # width in inches per weekday column
-    min_col_width = 2  # minimum width if you want to scale per workload (optional)
 
     # Calculate max jobs stacked per day for each team (for row height)
     team_row_heights = []
@@ -49,19 +48,25 @@ def export_gantt_chart(df, filename="mowing_team_schedule.xlsx"):
         row_height = max(min_row_height, spacing * max_jobs + padding)
         team_row_heights.append(row_height)
 
-    # For columns, here we keep equal widths, but you could calculate widths based on workload
+    # Columns have fixed equal widths here
     col_widths = [width_per_day] * len(weekdays)
 
     total_height = sum(team_row_heights)
     total_width = sum(col_widths)
 
-    fig = plt.figure(figsize=(total_width, total_height), constrained_layout=True)
+    # Set minimum figure size to avoid zero-size layout issues
+    min_fig_width = 8
+    min_fig_height = 10
+    fig_width = max(total_width, min_fig_width)
+    fig_height = max(total_height, min_fig_height)
+
+    fig = plt.figure(figsize=(fig_width, fig_height), constrained_layout=True)
     gs = gridspec.GridSpec(
         nrows=len(teams),
         ncols=len(weekdays),
         height_ratios=team_row_heights,
         width_ratios=col_widths,
-        figure=fig
+        figure=fig,
     )
 
     for i, team in enumerate(teams):
@@ -88,8 +93,8 @@ def export_gantt_chart(df, filename="mowing_team_schedule.xlsx"):
                     bbox=dict(
                         boxstyle="round,pad=0.2",
                         facecolor=team_color_map[team],
-                        edgecolor=edge_color
-                    )
+                        edgecolor=edge_color,
+                    ),
                 )
                 y -= spacing
 
@@ -101,6 +106,12 @@ def export_gantt_chart(df, filename="mowing_team_schedule.xlsx"):
                 ax.set_ylabel(team, rotation=0, ha='right', va='center', fontsize=8)
 
     plt.suptitle("Calendar-style Gantt Chart (by Team and Day)", fontsize=14)
+
+    # Fallback: try tight_layout to avoid layout issues
+    try:
+        plt.tight_layout()
+    except Exception:
+        pass
 
     out_file = Path(filename).with_suffix('.calendar_gantt.png')
     plt.savefig(out_file, dpi=150)
